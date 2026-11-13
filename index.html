@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- =====================  CONFIGURACIÓN  =====================
+  Pega entre las comillas el enlace de tu hoja de Google con la carta.
+  Sirve el enlace normal de "Compartir" (con acceso "Cualquier persona
+  que tenga el enlace") o el de "Publicar en la Web".
+  Si lo dejas vacío, la carta se lee del archivo carta.csv.
+============================================================== -->
+<script>window.HOJA_DE_GOOGLE = "https://docs.google.com/spreadsheets/d/17lGLKTDFCkgTytpqIcbT3F2rGY3ISMHJcWNZlzL_9wA/edit?usp=sharing";</script>
+<title>Carta Bellaqueo</title>
+<meta name="description" content="Mira la carta de Bellaqueo desde tu celular.">
+<meta property="og:title" content="Carta Bellaqueo">
+<meta property="og:description" content="Mira la carta de Bellaqueo desde tu celular.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#120806">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2396362A'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' text-anchor='middle' fill='%23F5EDDC'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&amp;family=Barlow:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Una columna para celular en modo noche: dorado sobre negro tostado, como los flyers de Bellaqueo */
+  --noche: #120806;
+  --oro: #f5b941;
+  --oro-claro: #ffe8a3;
+  --brasa: #ff5a1f;
+  --crema: #f7ead7;
+  --humo: #b9a08c;
+  --titular: "Barlow Condensed", "TeX Gyre Heros Cn", "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", sans-serif-condensed, sans-serif;
+  --texto: "Barlow", "Segoe UI", Roboto, system-ui, sans-serif;
+  --barra: 3.9rem;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--noche); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 55% at 50% -12%, rgba(255, 122, 26, .30), transparent 62%),
+    radial-gradient(90% 40% at 50% 108%, rgba(196, 30, 12, .22), transparent 60%),
+    var(--noche);
+  color: var(--crema);
+  font-family: var(--texto);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+.pagina { position: relative; z-index: 1; max-width: 34rem; margin: 0 auto; padding: 0 1.25rem 2.5rem; }
+
+/* Brasas que suben despacio (decorativas) */
+.brasas { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.brasas i {
+  position: absolute; bottom: -12px; width: 4px; height: 4px; border-radius: 50%;
+  background: #ffc36b; box-shadow: 0 0 8px 2px rgba(255, 120, 30, .75); opacity: 0;
+  animation: subir 11s linear infinite;
+}
+.brasas i:nth-child(1) { left: 6%; animation-duration: 12s; }
+.brasas i:nth-child(2) { left: 17%; animation-delay: 3s; width: 3px; height: 3px; }
+.brasas i:nth-child(3) { left: 29%; animation-delay: 7s; animation-duration: 14s; }
+.brasas i:nth-child(4) { left: 41%; animation-delay: 1.5s; width: 5px; height: 5px; }
+.brasas i:nth-child(5) { left: 53%; animation-delay: 9s; animation-duration: 13s; width: 3px; height: 3px; }
+.brasas i:nth-child(6) { left: 64%; animation-delay: 4.5s; }
+.brasas i:nth-child(7) { left: 75%; animation-delay: 11s; animation-duration: 15s; width: 5px; height: 5px; }
+.brasas i:nth-child(8) { left: 86%; animation-delay: 6s; width: 3px; height: 3px; }
+.brasas i:nth-child(9) { left: 94%; animation-delay: 2s; animation-duration: 12.5s; }
+.brasas i:nth-child(10) { left: 47%; animation-delay: 13s; animation-duration: 16s; }
+@keyframes subir {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: .9; }
+  75% { opacity: .55; }
+  100% { transform: translate(-24px, -108vh); opacity: 0; }
+}
+
+/* Encabezado */
+.cabecera { padding: 2rem 0 1.25rem; text-align: center; }
+.logo { display: block; width: min(15rem, 72%); height: auto; margin: 0 auto .375rem; filter: drop-shadow(0 0 18px rgba(255, 140, 40, .35)); }
+.cabecera h1 { margin: 0; display: grid; gap: .125rem; justify-items: center; font-weight: 400; }
+.marca-texto, .titulo {
+  font-family: var(--titular);
+  font-weight: 800;
+  font-style: italic;
+  line-height: .95;
+  text-transform: uppercase;
+  color: var(--oro);
+  filter: drop-shadow(0 0 14px rgba(255, 140, 40, .45));
+}
+.marca-texto { font-size: clamp(3.25rem, 17vw, 5rem); letter-spacing: .01em; }
+.titulo { font-size: clamp(2.5rem, 12.5vw, 3.6rem); letter-spacing: .03em; padding: 0 .1em; }
+.hay-logo .marca-texto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.fecha {
+  margin: .625rem 0 0;
+  font-family: var(--titular);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--humo);
+}
+
+/* Barra de categorías */
+.categorias { position: sticky; top: 0; z-index: 5; margin: 0 -1.25rem; background: rgba(18, 8, 6, .98); }
+.categorias::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--oro), transparent); opacity: .7;
+}
+.chips {
+  position: relative;
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+  padding: .7rem 1.25rem;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 1.1rem;
+  border: 1px solid rgba(245, 185, 65, .55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .03);
+  color: var(--crema);
+  font-family: var(--titular);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.chip[aria-current="true"] {
+  background: linear-gradient(180deg, var(--oro-claro), var(--oro) 60%, #d18a1c);
+  border-color: transparent;
+  color: var(--noche);
+  box-shadow: 0 0 16px rgba(245, 185, 65, .45);
+}
+.chip:focus-visible { outline: 2px solid var(--oro-claro); outline-offset: 2px; }
+
+/* Estados */
+.estado { margin: 2rem 0 0; color: var(--humo); text-align: center; }
+.estado p { margin: 0 auto; max-width: 30ch; }
+.reintentar {
+  margin-top: 1rem;
+  min-height: 2.75rem;
+  padding: 0 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--oro-claro), var(--oro));
+  color: var(--noche);
+  font-family: var(--titular);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.reintentar:focus-visible { outline: 2px solid var(--oro-claro); outline-offset: 3px; }
+.aviso {
+  margin: 1.25rem 0 0;
+  padding: .75rem 1rem;
+  border: 1px solid var(--brasa);
+  border-radius: .5rem;
+  background: rgba(255, 90, 31, .08);
+  font-size: .9375rem;
+}
+
+/* Secciones y productos */
+.seccion { padding-top: 2rem; scroll-margin-top: var(--barra); }
+.seccion h2 {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin: 0 0 .875rem;
+  font-family: var(--titular);
+  font-size: 2.05rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: .04em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+.seccion h2::after {
+  content: ""; flex: 1; height: 2px; min-width: 2rem;
+  background: linear-gradient(90deg, var(--oro), transparent); opacity: .55;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .marca-texto, .titulo {
+    background: linear-gradient(180deg, var(--oro-claro) 0%, var(--oro) 46%, #c77d14 56%, var(--oro-claro) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+.items { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+.fila { display: flex; align-items: baseline; gap: .5rem; }
+.nombre { font-weight: 600; color: var(--crema); }
+.puntos {
+  flex: 1 1 1rem;
+  min-width: 1rem;
+  border-bottom: 2px dotted var(--oro);
+  opacity: .35;
+  transform: translateY(-.28em);
+}
+.precio {
+  font-family: var(--titular);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--oro);
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+}
+.desc { display: block; font-size: .9375rem; color: var(--humo); }
+.agotado .nombre { opacity: .5; text-decoration: line-through; text-decoration-color: rgba(255, 90, 31, .75); }
+.agotado .precio { font-size: 1rem; letter-spacing: .1em; text-transform: uppercase; color: var(--brasa); }
+.item.con-foto { display: grid; grid-template-columns: 4.25rem minmax(0, 1fr); gap: .9rem; align-items: center; }
+.foto {
+  display: block;
+  width: 4.25rem;
+  height: 4.25rem;
+  object-fit: contain;
+  padding: .3rem;
+  border-radius: .75rem;
+  /* Blanco puro: así las fotos JPG con fondo blanco y los PNG transparentes se ven igual */
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(245, 185, 65, .8), 0 0 14px rgba(245, 185, 65, .22), 0 6px 18px rgba(0, 0, 0, .45);
+}
+.agotado .foto { filter: grayscale(1); opacity: .5; }
+/* Imagen de categoría (columna "banner"), si se usa */
+.banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 2;
+  object-fit: cover;
+  margin: 0 0 1rem;
+  border-radius: .75rem;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(245, 185, 65, .7), 0 8px 22px rgba(0, 0, 0, .5);
+}
+
+/* Categoría destacada (columna "destacar") */
+.seccion.destacada {
+  margin: 2rem -1.25rem 0;
+  padding: 1.5rem 1.25rem 1.625rem;
+  background: linear-gradient(160deg, #8a1d0e 0%, #4a0f08 55%, #2a0905 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 232, 163, .35), inset 0 -1px 0 rgba(255, 232, 163, .2);
+}
+.destacada h2 { color: var(--oro-claro); }
+.destacada .precio { color: var(--oro-claro); }
+.destacada .puntos { border-bottom-color: var(--oro-claro); }
+.destacada .desc { color: #ecd6c0; }
+
+/* Pie */
+.pie {
+  margin-top: 3rem;
+  display: grid;
+  gap: .375rem;
+  justify-items: center;
+  text-align: center;
+  color: var(--humo);
+  font-size: .875rem;
+}
+.pie p { margin: 0; max-width: 34ch; }
+.pie .marca {
+  margin-bottom: .375rem;
+  font-family: var(--titular);
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+  .brasas { display: none; }
+}
+</style>
+   <script>if (location.search.indexOf('soyandy') !== -1) { try { localStorage.setItem('umami.disabled', '1'); } catch (e) {} }</script>
+   <script defer src="https://cloud.umami.is/script.js" data-website-id="6f8fbc6b-1c0b-4fad-906e-5b4773bbbe02" data-domains="andyganoza.github.io" data-exclude-hash="true"></script>
+</head>
+<body>
+<div class="brasas" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="pagina">
+<header class="cabecera">
+<img class="logo" src="img/logo-bellaqueo.png" alt="Bellaqueo" width="512" height="232" onload="document.documentElement.classList.add('hay-logo')" onerror="this.remove()">
+<h1><span class="titulo" style="font-size: clamp(2rem, 10vw, 2.9rem)">La carta</span> <span class="titulo" style="font-size: clamp(2.5rem, 13.5vw, 4rem)">Bellaquera</span></h1>
+<p class="fecha" id="fecha" style="font-size: 1rem; letter-spacing: .08em; text-wrap: balance"></p>
+</header>
+<nav class="categorias" aria-label="Categorías de la carta" hidden><div class="chips"></div></nav>
+<div class="estado" id="estado" role="status" aria-live="polite">Cargando carta…</div>
+<div class="aviso" id="aviso" role="status" hidden></div>
+<main id="carta"></main>
+<noscript><p class="estado">Para ver la carta activa JavaScript, o pide la carta impresa en barra.</p></noscript>
+<footer class="pie">
+<p class="marca">Fiestas Bravas</p>
+<p>Prohibida la venta de bebidas alcohólicas a menores de 18 años.</p>
+<p>Tomar bebidas alcohólicas en exceso es dañino.</p>
+</footer>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var RESPALDO = 'carta.csv';
+  var ESPERA_MS = 8000;
+  var SI = ['si', 'x', '1', 'true', 'yes'];
+  var NO = ['no', 'agotado', 'n', 'false', '0'];
+  var ALIAS = {
+    categoria: ['categoria', 'categorias', 'seccion', 'tipo'],
+    producto: ['producto', 'productos', 'nombre', 'bebida'],
+    detalle: ['detalle', 'descripcion', 'nota', 'presentacion'],
+    precio: ['precio', 'precios', 'precio (s/)', 'costo', 'valor'],
+    disponible: ['disponible', 'stock'],
+    destacar: ['destacar', 'destacada', 'destacado', 'recuadro'],
+    imagen: ['imagen', 'imagenes', 'foto', 'fotos', 'image', 'img'],
+    banner: ['banner', 'portada', 'imagen categoria', 'imagen de categoria', 'foto categoria']
+  };
+  var POSICIONES = { categoria: 0, producto: 1, detalle: 2, precio: 3, disponible: 4, destacar: 5 };
+  var AVISO_RESPALDO = 'No se pudo cargar la carta actualizada. Se muestra la última versión guardada: confirma los precios en barra.';
+
+  var nav = document.querySelector('.categorias');
+  var filaChips = nav.querySelector('.chips');
+  var principal = document.getElementById('carta');
+  var estado = document.getElementById('estado');
+  var aviso = document.getElementById('aviso');
+  var reducir = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* ---------------- Lectura de datos ---------------- */
+
+  function normal(texto) {
+    var s = String(texto == null ? '' : texto);
+    if (s.normalize) s = s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    return s.trim().toLowerCase();
+  }
+
+  // CSV según RFC 4180: comillas, comillas dobles escapadas, saltos dentro de comillas, CRLF y BOM.
+  // Detecta si el separador es coma o punto y coma (Excel en algunos idiomas usa ;).
+  function leerCSV(texto) {
+    texto = String(texto == null ? '' : texto).replace(/^﻿/, '');
+    var primera = texto.split(/\r?\n/, 1)[0] || '';
+    var sep = primera.split(';').length > primera.split(',').length ? ';' : ',';
+    var filas = [], fila = [], campo = '', comillas = false;
+    for (var i = 0; i < texto.length; i++) {
+      var c = texto.charAt(i);
+      if (comillas) {
+        if (c === '"') {
+          if (texto.charAt(i + 1) === '"') { campo += '"'; i++; } else { comillas = false; }
+        } else { campo += c; }
+      } else if (c === '"' && campo === '') {
+        comillas = true;
+      } else if (c === sep) {
+        fila.push(campo); campo = '';
+      } else if (c === '\n' || c === '\r') {
+        if (c === '\r' && texto.charAt(i + 1) === '\n') i++;
+        fila.push(campo); filas.push(fila); fila = []; campo = '';
+      } else {
+        campo += c;
+      }
+    }
+    if (campo !== '' || fila.length) { fila.push(campo); filas.push(fila); }
+    return filas.filter(function (f) {
+      return f.some(function (v) { return String(v).trim() !== ''; });
+    });
+  }
+
+  function columnas(cabecera) {
+    var mapa = {};
+    (cabecera || []).forEach(function (titulo, i) {
+      var n = normal(titulo);
+      Object.keys(ALIAS).forEach(function (clave) {
+        if (mapa[clave] === undefined && ALIAS[clave].indexOf(n) !== -1) mapa[clave] = i;
+      });
+    });
+    return mapa.producto !== undefined && mapa.precio !== undefined ? mapa : null;
+  }
+
+  // Acepta 160 · 160.00 · S/ 160 · 1,350 · 1,350.00 · 1.350 · 12,50. Otro texto (p. ej. "Consultar") se muestra tal cual.
+  function leerPrecio(texto) {
+    var t = String(texto == null ? '' : texto).trim();
+    if (!t) return null;
+    var s = t.replace(/s\/\.?/ig, '').replace(/soles?/ig, '').replace(/\s+/g, '');
+    if (!/^\d[\d.,]*$/.test(s)) return { texto: t };
+    var coma = s.lastIndexOf(','), punto = s.lastIndexOf('.');
+    if (coma !== -1 && punto !== -1) {
+      s = coma > punto ? s.replace(/\./g, '').replace(',', '.') : s.replace(/,/g, '');
+    } else if (coma !== -1) {
+      s = /^\d{1,3}(,\d{3})+$/.test(s) ? s.replace(/,/g, '') : s.replace(',', '.');
+    } else if (punto !== -1 && /^\d{1,3}(\.\d{3})+$/.test(s)) {
+      s = s.replace(/\./g, '');
+    }
+    var n = parseFloat(s);
+    return isNaN(n) ? { texto: t } : { valor: n };
+  }
+
+  function textoPrecio(precio) {
+    if (!precio) return 'Consultar';
+    if (precio.texto) return precio.texto;
+    var v = precio.valor;
+    return 'S/ ' + (Math.round(v) === v ? String(v) : v.toFixed(2));
+  }
+
+  function armarCarta(filas) {
+    if (!filas || !filas.length) return [];
+    var mapa = columnas(filas[0]);
+    var datos = mapa ? filas.slice(1) : filas;
+    mapa = mapa || POSICIONES;
+    var categorias = [], porNombre = {}, ultima = '';
+    datos.forEach(function (fila) {
+      function celda(clave) {
+        var i = mapa[clave];
+        return i === undefined || fila[i] == null ? '' : String(fila[i]).trim();
+      }
+      var nombreCategoria = celda('categoria') || ultima;
+      var producto = celda('producto');
+      if (!nombreCategoria || !producto) return;
+      ultima = nombreCategoria;
+      var clave = normal(nombreCategoria);
+      var cat = porNombre[clave];
+      if (!cat) {
+        cat = { nombre: nombreCategoria, destacada: false, items: [] };
+        porNombre[clave] = cat;
+        categorias.push(cat);
+      }
+      if (SI.indexOf(normal(celda('destacar'))) !== -1) cat.destacada = true;
+      if (!cat.banner && celda('banner')) cat.banner = urlImagen(celda('banner'));
+      cat.items.push({
+        nombre: producto,
+        detalle: celda('detalle'),
+        precio: leerPrecio(celda('precio')),
+        agotado: NO.indexOf(normal(celda('disponible'))) !== -1,
+        imagen: urlImagen(celda('imagen'))
+      });
+    });
+    return categorias;
+  }
+
+  // Acepta img/foto.jpg (subida a GitHub), un enlace directo https://... o un enlace de Google Drive.
+  function urlImagen(texto) {
+    var t = String(texto == null ? '' : texto).trim();
+    if (!t) return '';
+    var drive = /drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([a-zA-Z0-9_-]{20,})/.exec(t);
+    if (drive) return 'https://drive.google.com/thumbnail?id=' + drive[1] + '&sz=w400';
+    return t;
+  }
+
+  function totalProductos(categorias) {
+    return categorias.reduce(function (n, c) { return n + c.items.length; }, 0);
+  }
+
+  // Respuesta del servicio de Google (gviz) a filas, como si fuera un CSV.
+  function tablaAFilas(tabla) {
+    var filas = [(tabla.cols || []).map(function (c) { return (c && c.label) || ''; })];
+    (tabla.rows || []).forEach(function (r) {
+      filas.push((r && r.c ? r.c : []).map(function (c) {
+        if (!c) return '';
+        if (c.f != null) return String(c.f);
+        return c.v == null ? '' : String(c.v);
+      }));
+    });
+    return filas;
+  }
+
+  /* ---------------- Fuentes de la carta ---------------- */
+
+  // Convierte el enlace pegado en la configuración en las direcciones que se intentan, en orden.
+  function intentosDeHoja(enlace) {
+    enlace = String(enlace || '').trim();
+    if (!enlace) return [];
+    var gid = /[#&?]gid=(\d+)/.exec(enlace);
+    if (/\/spreadsheets\/d\/e\//.test(enlace)) {
+      var pub = enlace.replace(/\/pubhtml/, '/pub').replace(/#.*$/, '');
+      if (!/[?&]output=csv/.test(pub)) pub += (pub.indexOf('?') === -1 ? '?' : '&') + 'output=csv';
+      return [{ tipo: 'csv', url: pub }];
+    }
+    var id = /\/spreadsheets\/d\/([a-zA-Z0-9_-]{20,})/.exec(enlace);
+    if (id) {
+      var base = 'https://docs.google.com/spreadsheets/d/' + id[1] + '/gviz/tq?headers=1' + (gid ? '&gid=' + gid[1] : '');
+      return [
+        { tipo: 'csv', url: base + '&tqx=out:csv' },
+        { tipo: 'jsonp', url: base }
+      ];
+    }
+    return [{ tipo: 'csv', url: enlace }];
+  }
+
+  function traerTexto(url, cache) {
+    return new Promise(function (resolve, reject) {
+      var control = window.AbortController ? new AbortController() : null;
+      var reloj = setTimeout(function () {
+        if (control) control.abort();
+        reject(new Error('Tiempo de espera agotado'));
+      }, ESPERA_MS);
+      fetch(url, { cache: cache || 'no-store', signal: control ? control.signal : undefined })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(function (t) { clearTimeout(reloj); resolve(t); },
+              function (e) { clearTimeout(reloj); reject(e); });
+    });
+  }
+
+  // JSONP: carga la hoja como script, así no depende de permisos CORS.
+  var contadorJsonp = 0;
+  function traerJSONP(url) {
+    return new Promise(function (resolve, reject) {
+      var nombre = '__cartaHoja' + (++contadorJsonp);
+      var script = document.createElement('script');
+      var reloj;
+      function limpiar() {
+        clearTimeout(reloj);
+        window[nombre] = function () {};
+        if (script.parentNode) script.parentNode.removeChild(script);
+      }
+      window[nombre] = function (respuesta) {
+        limpiar();
+        if (!respuesta || respuesta.status === 'error' || !respuesta.table) {
+          reject(new Error('La hoja respondió con un error'));
+          return;
+        }
+        resolve(tablaAFilas(respuesta.table));
+      };
+      script.onerror = function () { limpiar(); reject(new Error('No se pudo cargar la hoja')); };
+      reloj = setTimeout(function () { limpiar(); reject(new Error('Tiempo de espera agotado')); }, ESPERA_MS);
+      script.src = url + (url.indexOf('?') === -1 ? '?' : '&') + 'tqx=' +
+        encodeURIComponent('out:json;responseHandler:' + nombre);
+      document.head.appendChild(script);
+    });
+  }
+
+  function leerIntento(intento) {
+    var filas = intento.tipo === 'jsonp'
+      ? traerJSONP(intento.url)
+      : traerTexto(intento.url, intento.cache).then(leerCSV);
+    return filas.then(function (f) {
+      var categorias = armarCarta(f);
+      if (!totalProductos(categorias)) throw new Error('La carta no tiene productos');
+      return categorias;
+    });
+  }
+
+  function primeroQueFuncione(intentos) {
+    return intentos.reduce(function (cadena, intento) {
+      return cadena.catch(function () { return leerIntento(intento); });
+    }, Promise.reject(new Error('Sin fuentes')));
+  }
+
+  /* ---------------- Pantalla ---------------- */
+
+  function crear(etiqueta, clase, texto) {
+    var el = document.createElement(etiqueta);
+    if (clase) el.className = clase;
+    if (texto != null) el.textContent = texto;
+    return el;
+  }
+
+  function slug(texto, usados) {
+    var base = normal(texto).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'seccion';
+    var id = base, n = 2;
+    while (usados[id]) id = base + '-' + (n++);
+    usados[id] = true;
+    return id;
+  }
+
+  function pintar(categorias) {
+    var usados = { carta: true, estado: true, aviso: true };
+    principal.textContent = '';
+    filaChips.textContent = '';
+    categorias.forEach(function (cat) {
+      var id = slug(cat.nombre, usados);
+      var chip = crear('a', 'chip', cat.nombre);
+      chip.href = '#' + id;
+      chip.setAttribute('data-destino', id);
+      filaChips.appendChild(chip);
+
+      var seccion = crear('section', cat.destacada ? 'seccion destacada' : 'seccion');
+      seccion.id = id;
+      seccion.setAttribute('aria-labelledby', 't-' + id);
+      var titulo = crear('h2', null, cat.nombre);
+      titulo.id = 't-' + id;
+      seccion.appendChild(titulo);
+      if (cat.banner) {
+        var banner = crear('img', 'banner');
+        banner.alt = '';
+        banner.loading = 'lazy';
+        banner.decoding = 'async';
+        banner.width = 1200;
+        banner.height = 480;
+        banner.addEventListener('error', function () { if (banner.parentNode) banner.parentNode.removeChild(banner); });
+        banner.src = cat.banner;
+        seccion.appendChild(banner);
+      }
+      var lista = crear('ul', 'items');
+      cat.items.forEach(function (it) {
+        var li = crear('li', it.agotado ? 'item agotado' : 'item');
+        var contenido = li;
+        if (it.imagen) {
+          li.className += ' con-foto';
+          var foto = crear('img', 'foto');
+          foto.alt = '';
+          foto.loading = 'lazy';
+          foto.decoding = 'async';
+          foto.width = 64;
+          foto.height = 64;
+          foto.addEventListener('error', function () {
+            li.classList.remove('con-foto');
+            if (foto.parentNode) foto.parentNode.removeChild(foto);
+          });
+          foto.src = it.imagen;
+          li.appendChild(foto);
+          contenido = crear('div', 'texto');
+          li.appendChild(contenido);
+        }
+        var fila = crear('div', 'fila');
+        fila.appendChild(crear('span', 'nombre', it.nombre));
+        var puntos = crear('span', 'puntos');
+        puntos.setAttribute('aria-hidden', 'true');
+        fila.appendChild(puntos);
+        fila.appendChild(crear('span', 'precio', it.agotado ? 'Agotado' : textoPrecio(it.precio)));
+        contenido.appendChild(fila);
+        if (it.detalle) contenido.appendChild(crear('span', 'desc', it.detalle));
+        lista.appendChild(li);
+      });
+      seccion.appendChild(lista);
+      principal.appendChild(seccion);
+    });
+    nav.hidden = categorias.length < 2;
+    prepararNavegacion();
+    if (location.hash.length > 1) {
+      var destino = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (destino) destino.scrollIntoView();
+    }
+  }
+
+  function mostrarEstado(texto) {
+    estado.textContent = texto;
+    estado.hidden = false;
+  }
+
+  function ocultarEstado() {
+    estado.hidden = true;
+    estado.textContent = '';
+  }
+
+  function mostrarError() {
+    estado.textContent = '';
+    estado.appendChild(crear('p', null, 'No se pudo cargar la carta. Revisa tu conexión e inténtalo de nuevo, o pide la carta impresa en barra.'));
+    var boton = crear('button', 'reintentar', 'Reintentar');
+    boton.type = 'button';
+    boton.addEventListener('click', cargar);
+    estado.appendChild(boton);
+    estado.hidden = false;
+  }
+
+  /* ---------------- Barra de categorías ---------------- */
+
+  var chips = [], secciones = [], actual = null, bloqueo = 0, pendiente = false;
+
+  function centrarChip(chip) {
+    var izq = chip.offsetLeft - (filaChips.clientWidth - chip.offsetWidth) / 2;
+    try { filaChips.scrollTo({ left: izq, behavior: reducir ? 'auto' : 'smooth' }); }
+    catch (e) { filaChips.scrollLeft = izq; }
+  }
+
+  function activar(id) {
+    if (id === actual) return;
+    actual = id;
+    chips.forEach(function (c) {
+      if (c.getAttribute('data-destino') === id) {
+        c.setAttribute('aria-current', 'true');
+        centrarChip(c);
+      } else {
+        c.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  function revisar() {
+    if (!secciones.length || nav.hidden || Date.now() < bloqueo) return;
+    var limite = nav.getBoundingClientRect().bottom + 24;
+    var id = secciones[0].id;
+    for (var i = 0; i < secciones.length; i++) {
+      if (secciones[i].getBoundingClientRect().top <= limite) id = secciones[i].id;
+    }
+    var raiz = document.documentElement;
+    if (window.scrollY > 0 && window.innerHeight + window.scrollY >= raiz.scrollHeight - 4) {
+      id = secciones[secciones.length - 1].id;
+    }
+    activar(id);
+  }
+
+  function prepararNavegacion() {
+    chips = Array.prototype.slice.call(filaChips.querySelectorAll('.chip'));
+    secciones = chips.map(function (c) { return document.getElementById(c.getAttribute('data-destino')); });
+    actual = null;
+    chips.forEach(function (c) {
+      c.addEventListener('click', function (ev) {
+        var destino = document.getElementById(c.getAttribute('data-destino'));
+        if (!destino) return;
+        ev.preventDefault();
+        bloqueo = Date.now() + 1200;
+        activar(destino.id);
+        destino.scrollIntoView({ behavior: reducir ? 'auto' : 'smooth', block: 'start' });
+        if (window.history && history.replaceState) history.replaceState(null, '', '#' + destino.id);
+      });
+    });
+    revisar();
+  }
+
+  window.addEventListener('scroll', function () {
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function () { pendiente = false; revisar(); });
+  }, { passive: true });
+  window.addEventListener('scrollend', function () { bloqueo = 0; });
+
+  /* ---------------- Carga ---------------- */
+
+  function cargar() {
+    mostrarEstado('Cargando carta…');
+    aviso.hidden = true;
+    var hoja = intentosDeHoja(window.HOJA_DE_GOOGLE);
+    primeroQueFuncione(hoja)
+      .then(function (categorias) {
+        pintar(categorias);
+        ocultarEstado();
+      }, function () {
+        return primeroQueFuncione([{ tipo: 'csv', url: RESPALDO, cache: 'no-cache' }]).then(function (categorias) {
+          pintar(categorias);
+          ocultarEstado();
+          if (hoja.length) {
+            aviso.textContent = AVISO_RESPALDO;
+            aviso.hidden = false;
+          }
+        });
+      })
+      .catch(mostrarError);
+  }
+
+  // Para revisar desde la consola del navegador si algo falla.
+  window.CartaBellaqueo = {
+    leerCSV: leerCSV, leerPrecio: leerPrecio, armarCarta: armarCarta,
+    intentosDeHoja: intentosDeHoja, tablaAFilas: tablaAFilas, traerJSONP: traerJSONP, urlImagen: urlImagen, recargar: cargar
+  };
+
+  cargar();
+})();
+</script>
+  <script>
+(function () {
+  var fecha = document.getElementById('fecha');
+  function mostrarFecha() {
+    var texto = new Date().toLocaleDateString('es-PE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Lima' });
+    fecha.textContent = texto.charAt(0).toUpperCase() + texto.slice(1);
+  }
+  mostrarFecha();
+  setInterval(mostrarFecha, 60000);
+})();
+</script>
+</body>
+</html>
